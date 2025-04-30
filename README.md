@@ -1,4 +1,4 @@
-# Turborepo react-native starter
+# Turborepo react-native react nest starter
 
 This is a community-maintained example. If you experience a problem, please submit a pull request with a fix. GitHub Issues will be closed.
 
@@ -30,3 +30,6 @@ This Turborepo has some additional tools already setup for you:
 - [Expo](https://docs.expo.dev/) for native development
 - [TypeScript](https://www.typescriptlang.org/) for static type checking
 - [Prettier](https://prettier.io) for code formatting
+
+### Global Nest CLI
+npm install -g @nestjs/cli

@@ -4,10 +4,14 @@ import { Task } from './task.model';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Controller('tasks')
 export class TasksController {
-    constructor(private readonly tasksService: TasksService) {}
+    constructor(
+      private readonly tasksService: TasksService,
+      private readonly prismaService: PrismaService
+    ) {}
     
     @Get()
     getTasks(@Query() filterDto: GetTasksFilterDto): Task[] {
@@ -17,6 +21,13 @@ export class TasksController {
         return this.tasksService.getAllTasks();
       }
     }
+
+    @Get('health')
+    getUser() {
+      return this.prismaService.user.findMany();
+    }
+
+
     @Post()
     createTask(@Body() dto: CreateTaskDto): Task {
         return this.tasksService.createTask(dto)

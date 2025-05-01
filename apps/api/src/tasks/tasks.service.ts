@@ -32,23 +32,23 @@ export class TasksService {
 
   async createTask(dto: CreateTaskDto): Promise<Task> {
     const { title, desc } = dto;
-    
+
     return this.prismaApi.task.create({
       data: {
         title: title,
         description: desc,
         status: TaskStatus.OPEN,
-      }
+      },
     });
   }
 
   async getTaskById(id: string): Promise<Task> {
     const task = await this.prismaApi.task.findUnique({ where: { id } });
-    
+
     if (!task) {
       throw new NotFoundException(`Task with ID "${id}" not found`);
     }
-    
+
     return task;
   }
 
@@ -59,7 +59,7 @@ export class TasksService {
   async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
     return this.prismaApi.task.update({
       where: { id },
-      data: { status: status }, 
+      data: { status: status },
     });
   }
 }

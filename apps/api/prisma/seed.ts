@@ -8,6 +8,7 @@ async function main() {
     data: {
       email: 'alice@example.com',
       name: 'Alice',
+      password: '123',
       tasks: {
         create: [
           {
@@ -29,6 +30,7 @@ async function main() {
     data: {
       email: 'bob@example.com',
       name: 'Bob',
+      password: '123',
       tasks: {
         create: [
           {
@@ -55,6 +57,7 @@ async function main() {
     data: {
       email: 'charlie@example.com',
       name: 'Charlie',
+      password: '123',
       tasks: {
         create: [
           {
@@ -72,6 +75,7 @@ async function main() {
     data: {
       email: 'dave@example.com',
       name: 'Dave',
+      password: '123',
     },
   });
 

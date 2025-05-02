@@ -1,69 +1,65 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Task, TaskStatus } from './task.model';
-import { v7 as uuid } from 'uuid';
+import { PrismaApi } from 'src/prisma/prisma.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
+import { Task, TaskStatus } from '@prisma/client';
 
 @Injectable()
 export class TasksService {
-  private tasks: Task[] = [];
+  constructor(private readonly prismaApi: PrismaApi) {}
 
-  getAllTasks(): Task[] {
-    return this.tasks;
+  async getAllTasks(): Promise<Task[]> {
+    return this.prismaApi.task.findMany();
   }
 
-  getTasksWithFilters(filterDto: GetTasksFilterDto): Task[] {
+  async getTasksWithFilters(filterDto: GetTasksFilterDto): Promise<Task[]> {
     const { status, search } = filterDto;
+    const where: any = {};
 
-    let tasks = this.getAllTasks();
-
-    // do something with status
     if (status) {
-      tasks = tasks.filter((task) => task.status === status);
+      where.status = status;
     }
 
     if (search) {
-      tasks = tasks.filter((task) => {
-        if (task.title.includes(search) || task.description.includes(search)) {
-          return true;
-        }
-
-        return false;
-      });
+      where.OR = [
+        { title: { contains: search, mode: 'insensitive' } },
+        { description: { contains: search, mode: 'insensitive' } },
+      ];
     }
 
-    return tasks;
+    return this.prismaApi.task.findMany({ where });
   }
 
-  createTask(dto: CreateTaskDto): Task {
+  async createTask(dto: CreateTaskDto): Promise<Task> {
     const { title, desc } = dto;
-    const newTask: Task = {
-      id: uuid(),
-      title: title,
-      description: desc,
-      status: TaskStatus.OPEN,
-    };
-    this.tasks.push(newTask);
-    return newTask;
+
+    return this.prismaApi.task.create({
+      data: {
+        title: title,
+        description: desc,
+        status: TaskStatus.OPEN,
+      },
+    });
   }
 
-  getTaskById(id: string): Task {
-    const found = this.tasks.find((task) => task.id === id);
+  async getTaskById(id: string): Promise<Task> {
+    const task = await this.prismaApi.task.findUnique({ where: { id } });
 
-    if (!found) {
+    if (!task) {
       throw new NotFoundException(`Task with ID "${id}" not found`);
     }
 
-    return found;
-  }
-
-  deleteTask(id: string) {
-    this.tasks = this.tasks.filter((task) => task.id !== id);
-  }
-
-  updateTaskStatus(id: string, status: TaskStatus) {
-    const task = this.getTaskById(id);
-    task.status = status;
     return task;
+  }
+
+  async deleteTask(id: string): Promise<void> {
+    await this.prismaApi.task.delete({ where: { id } });
+  }
+
+  async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
+    return this.prismaApi.task.update({
+      where: { id },
+      data: { status: status },
+    });
   }
 }

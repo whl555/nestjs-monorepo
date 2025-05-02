@@ -6,7 +6,6 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "db-seed": "prisma db seed",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
@@ -19,10 +18,11 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "dev": "nest start"
-  },
-  "prisma": {
-    "seed": "tsx prisma/seed.ts"
+    "dev": "nest start",
+    "gen-module": "tsx ./scripts/gen-module.ts",
+    "prisma-update": "tsx ./scripts/prisma-migrate.ts",
+    "prisma-reset": "npx prisma migrate reset",
+    "prisma-init": "tsx ./scripts/prisma-migrate.ts init & tsx ./prisma/seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

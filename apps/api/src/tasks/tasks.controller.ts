@@ -1,43 +1,53 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-import { Task } from './task.model';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
+import { PrismaApi } from 'src/prisma/prisma.service';
+import { Task } from '@prisma/client';
 
 @Controller('tasks')
 export class TasksController {
-    constructor(private readonly tasksService: TasksService) {}
-    
-    @Get()
-    getTasks(@Query() filterDto: GetTasksFilterDto): Task[] {
-      if (Object.keys(filterDto).length) {
-        return this.tasksService.getTasksWithFilters(filterDto);
-      } else {
-        return this.tasksService.getAllTasks();
-      }
-    }
-    @Post()
-    createTask(@Body() dto: CreateTaskDto): Task {
-        return this.tasksService.createTask(dto)
-    }
+  constructor(
+    private readonly tasksService: TasksService,
+    private readonly prismaApi: PrismaApi
+  ) {}
 
-    @Get('/:id')
-    getTaskById(@Param('id') id: string): Task | undefined {
-        return this.tasksService.getTaskById(id)
+  @Get()
+  async getTasks(@Query() filterDto?: GetTasksFilterDto): Promise<Task[]> {
+    if (filterDto && Object.keys(filterDto).length) {
+      return await this.tasksService.getTasksWithFilters(filterDto);
+    } else {
+      return await this.tasksService.getAllTasks();
     }
+  }
 
-    @Delete('/:id')
-    deleteTask(@Param('id') id: string) {
-        return this.tasksService.deleteTask(id)
-    }
+  @Get('health')
+  async getUser() {
+    return await this.prismaApi.user.findMany();
+  }
 
-    @Patch('/:id/status')
-    updateTaskStatus(
-      @Param('id') id: string,
-      @Body() updateTaskStatusDto: UpdateTaskStatusDto,
-    ): Task {
-      const { status } = updateTaskStatusDto;
-      return this.tasksService.updateTaskStatus(id, status);
-    }
+  @Post()
+  async createTask(@Body() dto: CreateTaskDto): Promise<Task> {
+    return await this.tasksService.createTask(dto);
+  }
+
+  @Get('/:id')
+  async getTaskById(@Param('id') id: string): Promise<Task> {
+    return await this.tasksService.getTaskById(id);
+  }
+
+  @Delete('/:id')
+  async deleteTask(@Param('id') id: string): Promise<void> {
+    await this.tasksService.deleteTask(id);
+  }
+
+  @Patch('/:id/status')
+  async updateTaskStatus(
+    @Param('id') id: string,
+    @Body() updateTaskStatusDto: UpdateTaskStatusDto,
+  ): Promise<Task> {
+    const { status } = updateTaskStatusDto;
+    return await this.tasksService.updateTaskStatus(id, status);
+  }
 }

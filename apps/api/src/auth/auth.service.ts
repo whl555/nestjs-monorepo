@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { PrismaApi } from 'src/prisma/prisma.service';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
@@ -8,20 +8,20 @@ export class AuthService {
   constructor(private readonly prismaApi: PrismaApi) {}
 
   async createUser(authDto: AuthCredentialsDto): Promise<User> {
-    const existingUser = await this.prismaApi.user.findUnique({
-      where: { email: authDto.email },
-    });
-
-    if (existingUser) {
-      throw new ConflictException('Email already exists');
+    try {
+      const user = await this.prismaApi.user.create({
+        data: {
+          name: authDto.username,
+          email: authDto.email,
+          password: authDto.password,
+        },
+      });
+      return Promise.resolve(user);
+    } catch (error) {
+      if (error.code === 'P2002') {
+        return Promise.reject(new ConflictException('Email already exists'));
+      }
+      return Promise.reject(new InternalServerErrorException());
     }
-
-    return this.prismaApi.user.create({
-      data: {
-        email: authDto.email,
-        name: authDto.username,
-        password: authDto.password,
-      },
-    });
   }
 }

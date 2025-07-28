@@ -128,7 +128,7 @@ export class CardsService {
     
     return await this.createCard({
       title: template.name,
-      description: template.description,
+      description: template.description || undefined,
       type: template.type,
       config,
     });

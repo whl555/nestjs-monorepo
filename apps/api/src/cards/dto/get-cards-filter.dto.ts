@@ -1,4 +1,10 @@
-import { IsOptional, IsEnum, IsNumber, IsBoolean, IsString } from 'class-validator';
+import {
+  IsOptional,
+  IsEnum,
+  IsNumber,
+  IsBoolean,
+  IsString,
+} from 'class-validator';
 import { CardType } from '@prisma/client';
 
 export class GetCardsFilterDto {
@@ -25,4 +31,4 @@ export class GetCardsFilterDto {
   @IsOptional()
   @IsNumber()
   limit?: number;
-} 
+}

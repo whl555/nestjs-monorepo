@@ -10,6 +10,6 @@ import { CardsModule } from './cards/cards.module';
 @Module({
   imports: [TasksModule, PrismaModule, AuthModule, LogModule, CardsModule],
   controllers: [AppController],
-  providers: [AppService]
+  providers: [AppService],
 })
 export class AppModule {}

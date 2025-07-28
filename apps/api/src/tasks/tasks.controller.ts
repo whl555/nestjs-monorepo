@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
@@ -10,7 +19,7 @@ import { Task } from '@prisma/client';
 export class TasksController {
   constructor(
     private readonly tasksService: TasksService,
-    private readonly prismaApi: PrismaApi
+    private readonly prismaApi: PrismaApi,
   ) {}
 
   @Get()

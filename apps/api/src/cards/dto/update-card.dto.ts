@@ -1,4 +1,11 @@
-import { IsString, IsOptional, IsObject, IsNumber, IsBoolean, IsEnum } from 'class-validator';
+import {
+  IsString,
+  IsOptional,
+  IsObject,
+  IsNumber,
+  IsBoolean,
+  IsEnum,
+} from 'class-validator';
 import { CardType } from '@prisma/client';
 
 export class UpdateCardDto {
@@ -25,4 +32,4 @@ export class UpdateCardDto {
   @IsOptional()
   @IsBoolean()
   isActive?: boolean;
-} 
+}

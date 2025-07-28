@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Card, CreateCardDto, UpdateCardDto } from '@repo/shared-types';
+import { Card, CreateCardDto, UpdateCardDto, CardTemplate, CardConfig } from '@repo/shared-types';
 
 // 根据运行环境设置API基础URL
 const API_BASE_URL = __DEV__ 
@@ -19,10 +19,7 @@ export const cardService = {
   async getCards(): Promise<Card[]> {
     try {
       const response = await api.get('/cards');
-      return response.data.map((card: any) => ({
-        ...card,
-        config: typeof card.config === 'string' ? JSON.parse(card.config) : card.config,
-      }));
+      return response.data;
     } catch (error) {
       console.error('获取卡片失败:', error);
       throw error;
@@ -33,12 +30,7 @@ export const cardService = {
   async getCard(id: string): Promise<Card> {
     try {
       const response = await api.get(`/cards/${id}`);
-      return {
-        ...response.data,
-        config: typeof response.data.config === 'string' 
-          ? JSON.parse(response.data.config) 
-          : response.data.config,
-      };
+      return response.data;
     } catch (error) {
       console.error('获取卡片失败:', error);
       throw error;
@@ -49,12 +41,7 @@ export const cardService = {
   async createCard(data: CreateCardDto): Promise<Card> {
     try {
       const response = await api.post('/cards', data);
-      return {
-        ...response.data,
-        config: typeof response.data.config === 'string' 
-          ? JSON.parse(response.data.config) 
-          : response.data.config,
-      };
+      return response.data;
     } catch (error) {
       console.error('创建卡片失败:', error);
       throw error;
@@ -65,12 +52,7 @@ export const cardService = {
   async updateCard(id: string, data: UpdateCardDto): Promise<Card> {
     try {
       const response = await api.patch(`/cards/${id}`, data);
-      return {
-        ...response.data,
-        config: typeof response.data.config === 'string' 
-          ? JSON.parse(response.data.config) 
-          : response.data.config,
-      };
+      return response.data;
     } catch (error) {
       console.error('更新卡片失败:', error);
       throw error;
@@ -98,7 +80,7 @@ export const cardService = {
   },
 
   // 获取卡片模板
-  async getTemplates(): Promise<any[]> {
+  async getTemplates(): Promise<CardTemplate[]> {
     try {
       const response = await api.get('/cards/templates');
       return response.data;
@@ -109,7 +91,7 @@ export const cardService = {
   },
 
   // 获取默认配置
-  async getDefaultConfig(type: string): Promise<any> {
+  async getDefaultConfig(type: string): Promise<CardConfig> {
     try {
       const response = await api.get(`/cards/default/${type}`);
       return response.data;

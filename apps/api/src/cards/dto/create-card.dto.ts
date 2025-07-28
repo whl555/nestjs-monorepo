@@ -1,5 +1,4 @@
-import { IsString, IsEnum, IsOptional, IsObject, IsNumber, IsBoolean } from 'class-validator';
-import { CardType } from '@prisma/client';
+import { IsString, IsOptional, IsObject, IsNumber } from 'class-validator';
 
 export class CreateCardDto {
   @IsString()
@@ -9,8 +8,8 @@ export class CreateCardDto {
   @IsString()
   description?: string;
 
-  @IsEnum(CardType)
-  type: CardType;
+  @IsString()
+  type: string; // 使用string类型，在运行时会检查
 
   @IsObject()
   config: any; // JSON配置，这里用any因为配置结构会根据类型变化
@@ -22,4 +21,4 @@ export class CreateCardDto {
   @IsOptional()
   @IsNumber()
   userId?: number;
-} 
+}

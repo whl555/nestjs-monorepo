@@ -1,0 +1,23 @@
+依赖检查报告
+生成时间: Mon Jul 28 15:51:37 CST 2025
+====================================
+
+环境信息:
+- Node.js: v24.0.2
+- npm: 11.3.0
+- 操作系统: Darwin
+
+包依赖状态:
+
+根目录:
+
+packages/shared-types:
+
+packages/ui:
+
+apps/api:
+  依赖未安装
+
+apps/web:
+
+apps/native:

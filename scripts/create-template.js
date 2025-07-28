@@ -4,14 +4,14 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-const projectName = process.argv[2] || 'my-nestjs-project';
+const projectName = process.argv[2] || 'ts-fullstack';
 
 console.log(`🚀 创建新的 NestJS Monorepo 项目: ${projectName}`);
 
 try {
   // 克隆模板
   console.log('📥 下载模板...');
-  execSync(`git clone https://github.com/your-username/nestjs-monorepo-template.git ${projectName}`, { stdio: 'inherit' });
+  execSync(`git clone https://github.com/wuhaolei455/nestjs-monorepo.git ${projectName}`, { stdio: 'inherit' });
   
   // 进入项目目录
   process.chdir(projectName);

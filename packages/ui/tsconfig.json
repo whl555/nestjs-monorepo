@@ -11,8 +11,9 @@
     "declaration": true,
     "outDir": "./dist",
     "jsx": "react-native",
-    "types": ["react", "react-native"]
+    "noEmit": false,
+    "isolatedModules": true
   },
   "include": ["src/**/*"],
-  "exclude": ["dist", "build", "node_modules", "**/*.test.*", "**/__tests__/**"]
+  "exclude": ["dist", "build", "node_modules"]
 }

@@ -1,16 +1,53 @@
-# 🎯 TypeScript 全栈卡片系统
+# TypeScript 全栈卡片系统
 
-一个基于 TypeScript 的现代化全栈开发模板，展示可配置卡片系统，支持 Web、iOS 和 Android 多平台。
+> 🚀 一个基于 NestJS + React + React Native 的现代化全栈 monorepo 模板，支持可配置卡片系统
 
-## ✨ 项目特色
+[![CI](https://github.com/your-username/nestjs-monorepo-template/workflows/CI/badge.svg)](https://github.com/your-username/nestjs-monorepo-template/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.5-blue)](https://www.typescriptlang.org/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
-- 🏗️ **Monorepo 架构**：使用 Turborepo 管理多个应用和共享包
-- 🚀 **全栈 TypeScript**：前后端统一使用 TypeScript 开发
-- 📱 **跨平台支持**：Web (React) + 移动端 (React Native)
-- 🎨 **可配置卡片**：支持多种卡片类型（文本、图片、链接、统计、待办事项）
-- 🔧 **现代技术栈**：NestJS + Prisma + React + React Native
-- 📦 **组件复用**：共享 UI 组件库和类型定义
-- 🎭 **美观界面**：现代化 UI 设计，支持响应式布局
+## 🎯 项目特色
+
+- ✅ **全栈 TypeScript**：前后端统一的类型安全开发
+- ✅ **三端统一**：Web + iOS + Android 一套代码
+- ✅ **可配置卡片**：支持文本、图片、统计、待办等多种卡片类型
+- ✅ **现代化架构**：Monorepo + Turborepo + Prisma + NestJS
+- ✅ **开箱即用**：完整的开发环境和 CI/CD 配置
+- ✅ **最佳实践**：代码规范、文档完善、测试覆盖
+
+## 📚 文档导航
+
+- 📖 **[快速开始](TEMPLATE_USAGE.md#快速开始)** - 5分钟上手指南
+- 🔧 **[开发总结](DEVELOPMENT_SUMMARY.md)** - 完整的开发思路和技术决策
+- 🚀 **[模板创建](TEMPLATE_USAGE.md#创建模板仓库)** - 创建你自己的模板
+- 🐛 **[故障排除](TEMPLATE_USAGE.md#故障排除)** - 常见问题解决方案
+- 📋 **[贡献指南](CONTRIBUTING.md)** - 如何参与项目贡献
+
+## 🚀 一键开始
+
+### 使用 GitHub 模板（推荐）
+
+1. 点击 **[Use this template](https://github.com/your-username/nestjs-monorepo-template/generate)** 按钮
+2. 创建你的新仓库
+3. 克隆到本地并初始化：
+
+```bash
+git clone https://github.com/your-username/your-new-project.git
+cd your-new-project
+npm run template:init  # 初始化向导
+npm run start          # 启动开发服务器
+```
+
+### 直接使用脚本
+
+```bash
+# 一键创建模板仓库
+./scripts/setup-github-template.sh
+
+# 一键启动开发环境
+./scripts/dev.sh
+```
 
 ## 🏛️ 项目架构
 

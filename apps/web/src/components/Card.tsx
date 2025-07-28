@@ -1,10 +1,9 @@
-import React from 'react';
-import { Card as CardType, CardType as CardTypeEnum } from '@repo/shared-types';
+import { Card as CardData, CardType as CardTypeEnum } from '@repo/shared-types';
 import './Card.css';
 
 interface CardProps {
-  card: CardType;
-  onEdit?: (card: CardType) => void;
+  card: CardData;
+  onEdit?: (card: CardData) => void;
   editable?: boolean;
 }
 
@@ -42,7 +41,7 @@ export function Card({ card, onEdit, editable = false }: CardProps) {
         style={{
           fontSize: `${textConfig.fontSize || 16}px`,
           color: textConfig.color || '#333333',
-          textAlign: textConfig.alignment || 'left' as any,
+          textAlign: (textConfig.alignment || 'left') as 'left' | 'center' | 'right',
         }}
       >
         {textConfig.content || ''}
@@ -58,7 +57,7 @@ export function Card({ card, onEdit, editable = false }: CardProps) {
         alt={imageConfig.alt || ''}
         className="card-image"
         style={{
-          objectFit: imageConfig.objectFit || 'cover' as any,
+          objectFit: (imageConfig.objectFit || 'cover') as 'cover' | 'contain' | 'fill' | 'none' | 'scale-down',
         }}
       />
     );
@@ -106,11 +105,11 @@ export function Card({ card, onEdit, editable = false }: CardProps) {
     const todoConfig = config.todo || { items: [] };
     const items = todoConfig.showCompleted
       ? todoConfig.items
-      : todoConfig.items?.filter((item: any) => !item.completed) || [];
+      : todoConfig.items?.filter((item: { completed: boolean }) => !item.completed) || [];
 
     return (
       <div className="todo-container">
-        {items.map((item: any, index: number) => (
+        {items.map((item: { id?: string; text: string; completed: boolean }, index: number) => (
           <div key={item.id || index} className="todo-item">
             <span
               className={`todo-text ${item.completed ? 'todo-completed' : ''}`}

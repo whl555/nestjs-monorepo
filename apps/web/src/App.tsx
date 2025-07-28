@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from './components/Card';
 import { cardService } from './services/api';
-import { Card as CardType, CardType as CardTypeEnum } from '@repo/shared-types';
+import { Card as CardData, CardType as CardTypeEnum } from '@repo/shared-types';
 import './App.css';
 
 function App() {
-  const [cards, setCards] = useState<CardType[]>([]);
+  const [cards, setCards] = useState<CardData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -58,12 +58,12 @@ function App() {
     }
   };
 
-  const handleEditCard = (card: CardType) => {
+  const handleEditCard = (card: CardData) => {
     // 这里可以打开编辑对话框
     alert(`编辑卡片: ${card.title}`);
   };
 
-  const handleDeleteCard = async (card: CardType) => {
+  const handleDeleteCard = async (card: CardData) => {
     if (confirm(`确定要删除卡片 "${card.title}" 吗？`)) {
       try {
         await cardService.deleteCard(card.id);

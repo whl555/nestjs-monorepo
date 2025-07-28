@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@repo/shared-types": "*",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "axios": "^1.6.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

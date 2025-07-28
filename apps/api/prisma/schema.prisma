@@ -16,6 +16,9 @@ model User {
   name        String?
   password    String
   tasks       Task[]
+  cards       Card[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Task {
@@ -25,10 +28,49 @@ model Task {
   status      TaskStatus
   userId      Int?
   user        User?    @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// 卡片系统模型
+model Card {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  type        CardType
+  config      String    // JSON配置
+  position    Int       @default(0)
+  isActive    Boolean   @default(true)
+  userId      Int?
+  user        User?     @relation(fields: [userId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model CardTemplate {
+  id          String    @id @default(cuid())
+  name        String
+  type        CardType
+  defaultConfig String  // JSON默认配置
+  preview     String?   // 预览图片URL
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 enum TaskStatus {
   OPEN
   IN_PROGRESS
   DONE
+}
+
+enum CardType {
+  TEXT          // 文本卡片
+  IMAGE         // 图片卡片  
+  LINK          // 链接卡片
+  STATS         // 统计卡片
+  WEATHER       // 天气卡片
+  TODO          // 待办事项卡片
+  CHART         // 图表卡片
+  CUSTOM        // 自定义卡片
 }

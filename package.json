@@ -48,6 +48,7 @@
     "service": "./scripts/service-manager.sh",
     "deps": "./scripts/dependency-check.sh",
     "check": "./scripts/health-check.sh && ./scripts/dependency-check.sh",
+    "mobile:api": "node scripts/update-mobile-api.js",
     "troubleshoot": "echo '🔧 故障排除步骤:' && echo '1. 健康检查:' && ./scripts/health-check.sh && echo '' && echo '2. 依赖检查:' && ./scripts/dependency-check.sh && echo '' && echo '3. 如有问题请查看 TROUBLESHOOTING.md'"
   },
   "devDependencies": {
